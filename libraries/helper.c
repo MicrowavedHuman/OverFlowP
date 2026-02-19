@@ -2,6 +2,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
+#include <helper.h>
 
 int string_compare(char *string1, char *string2)
 {
@@ -55,4 +56,12 @@ int file_sb(const char* filepath)
     fseek(file, 0, SEEK_SET);
 
     return filesize;
+}
+
+
+char* type_list[] = {"TOKEN_INT", "TOKEN_IDENTIFIER", "TOKEN_EXIT", "TOKEN_LPAREN", "TOKEN_RPAREN", "TOKEN_EOF", "TOKEN_PLUS", "TOKEN_MINUS", "TOKEN_MULT", "TOKEN_DIVIDE", "TOKEN_SEMI"};
+
+char* type_converter(int type)
+{
+    return type_list[type];
 }
