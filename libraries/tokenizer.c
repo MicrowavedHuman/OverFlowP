@@ -80,7 +80,6 @@ Token tokenize(const char** input_ptr){
             token.type = TOKEN_IDENTIFIER;
         }
 
-
         *input_ptr = input;
         return token;
     }
