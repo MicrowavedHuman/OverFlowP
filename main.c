@@ -4,6 +4,8 @@
 #include <string.h>
 #include <helper.h>
 #include <tokenizer.h>
+#include <parser.h>
+#include <ast.h>
 
 #define MAX_TOKENS 10000 // adjust based on expected input size
 
@@ -43,7 +45,6 @@ int main(int argc, char **argv)
 
         tokens[token_count] = t;
 
-        free(t.text); // Free the token's text after use
         if (t.type == TOKEN_EOF) {
             token_count++;
             break;
@@ -63,6 +64,12 @@ int main(int argc, char **argv)
     system("mkdir -p assembling_dir");
 
 
+    Parser parser;
+    parser.tokens = tokens;
+    parser.pos = 0;
+    parser.token_count = token_count;
+
+    ASTNode* root = parse_program(&parser);
 
     // Assuming Finished with AST and assembling
     if(passed == 1)

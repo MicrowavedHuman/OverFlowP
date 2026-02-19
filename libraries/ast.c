@@ -4,15 +4,26 @@
 
 ASTNode* make_int_node(int value)
 {
-    // Cool Placeholder 1
+    ASTNode* node = malloc(sizeof(ASTNode));
+    node->type = AST_INT;
+    node->int_value = value;
+    return node;
 }
 
 ASTNode* make_binop_node(int op, ASTNode* left, ASTNode* right)
 {
-    // Cool placeholder 3
+    ASTNode* node = malloc(sizeof(ASTNode));
+    node->type = AST_BINOP;
+    node->binop.op = op;
+    node->binop.left = left;
+    node->binop.right = right;
+    return node;
 }
 
 ASTNode* make_exit_node(ASTNode* expr)
 {
-    // What happened to Cool Placeholder 2?
+    ASTNode* node = malloc(sizeof(ASTNode));
+    node->type = AST_EXIT;
+    node->exit_stmt.expr = expr;
+    return node;
 }
