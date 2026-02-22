@@ -59,7 +59,8 @@ Token tokenize(const char** input_ptr){
 
         if (string_compare(token.text, "exit") == 1){
             token.type = TOKEN_EXIT;
-        } else {
+        }
+        else {
             token.type = TOKEN_IDENTIFIER;
         }
 

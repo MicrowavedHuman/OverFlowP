@@ -13,14 +13,19 @@ helper="libraries/helper.c"
 tokenizer="libraries/tokenizer.c"
 ast="libraries/ast.c"
 parser="libraries/parser.c"
+codegen="libraries/codegen.c"
 
 ####################
 #     GCC Call     #
 ####################
-gcc ${main_i} ${helper} ${tokenizer} ${ast} ${parser} -I libraries -o ${main_o}
+gcc ${main_i} ${helper} ${tokenizer} ${ast} ${parser} ${codegen} -I libraries -o ${main_o}
 
 
 #######################
 #     Calling OFP     #
 #######################
-./${main_o} $1 $2
+./${main_o} $1 $2 $3
+
+#######################
+#     Calling OFP     #
+#######################

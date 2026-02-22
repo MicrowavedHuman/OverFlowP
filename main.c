@@ -6,6 +6,7 @@
 #include <tokenizer.h>
 #include <parser.h>
 #include <ast.h>
+#include <codegen.h>
 
 #define MAX_TOKENS 10000 // adjust based on expected input size
 
@@ -16,6 +17,7 @@ int main(int argc, char **argv)
     int debug; // Whether or not to print debug messages
     passed = 1;
     debug = 0;
+    char* output_name = "output";
 
     printf("OverFlowP\n");
     if(argc < 2){
@@ -29,6 +31,16 @@ int main(int argc, char **argv)
         return(1);
     }
 
+    if(argc > 2)
+    {
+        if(string_compare(argv[2], "-o") == 1)
+        {
+            if(argc > 3)
+            {
+                output_name = strdup(argv[3]);
+            }
+        }
+    }
     char* buffer; // Create an array of chars called buffer
     buffer = read_file(argv[1]); // Initliaze buffer!!
     const char* pnter = buffer; // Copy over stuff into pnter
@@ -70,7 +82,13 @@ int main(int argc, char **argv)
     parser.token_count = token_count;
 
     ASTNode* root = parse_program(&parser);
+    generate_program(root, output_name);
 
+    char output[256];
+    char cmd[512];
+    snprintf(output, sizeof(output), "assembling_dir/%s.s", output_name);
+    snprintf(cmd, sizeof(cmd), "gcc %s -o %s -nostdlib", output, output_name);
+    system(cmd);
     // Assuming Finished with AST and assembling
     if(passed == 1)
     {
