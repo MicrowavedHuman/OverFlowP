@@ -65,3 +65,16 @@ char* type_converter(int type)
 {
     return type_list[type];
 }
+
+int in_list(char** list, int list_length, char *string2)
+{
+    for(int i = 0; i < list_length; i++)
+    {
+        if(string_compare(list[i], string2) == 1)
+        {
+            return 1;
+        }
+    }
+
+    return 0;
+}

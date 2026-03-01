@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <parser.h>
 #include <helper.h>
+#include <string.h>
 
   /////////////////////////////
  //    Utility Functions    //
@@ -76,6 +77,11 @@ ASTNode* parse_factor(Parser* p)
         return make_int_node(atoi(t.text)); // ATOI is just basically int() remember that
     }
 
+    if(match(p, TOKEN_IDENTIFIER))
+    {
+        return make_var_node(t.text);
+    }
+
     if(match(p, TOKEN_LPAREN))
     {
         ASTNode* node = parse_expression(p);
@@ -97,10 +103,39 @@ ASTNode* parse_statement(Parser* p)
         return make_exit_node(expr);
     }
 
+    if(match(p, TOKEN_INT))
+    {
+        Token name = current(p);
+        expect(p, TOKEN_IDENTIFIER);
+        expect(p, TOKEN_SEMI);
+
+        return make_var_decl_node(name.text);
+    }
+
+    if(current(p).type == TOKEN_IDENTIFIER)
+    {
+        Token name = current(p);
+        advance(p);
+
+        expect(p, TOKEN_ASSIGN);
+
+        ASTNode* value = parse_expression(p);
+        expect(p, TOKEN_SEMI);
+
+        return make_assign_node(name.text, value);
+    }
+
     printf("Unknown Statement\n");
     exit(1);
 }
 
 ASTNode* parse_program(Parser* p) {
-    return parse_statement(p);
+    ASTNode* program = make_program_node();
+
+    while(current(p).type != TOKEN_EOF) {
+        ASTNode* stmt = parse_statement(p);
+        add_statement(program, stmt);
+    }
+
+    return program;
 }

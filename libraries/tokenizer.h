@@ -4,6 +4,7 @@
 typedef enum {
     TOKEN_INT,
     TOKEN_IDENTIFIER,
+    TOKEN_ASSIGN,
     TOKEN_EXIT,
     TOKEN_LPAREN,
     TOKEN_RPAREN,
@@ -12,6 +13,7 @@ typedef enum {
     TOKEN_MINUS,
     TOKEN_MULT,
     TOKEN_DIVIDE,
+    TOKEN_EXPO,
     TOKEN_SEMI
 } TokenType;
 

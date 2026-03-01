@@ -24,8 +24,5 @@ gcc ${main_i} ${helper} ${tokenizer} ${ast} ${parser} ${codegen} -I libraries -o
 #######################
 #     Calling OFP     #
 #######################
-./${main_o} $1 $2 $3
+./${main_o} $1 $2 $3 $4 $5
 
-#######################
-#     Calling OFP     #
-#######################

@@ -2,37 +2,63 @@
 #define AST_H
 
 // Types
+typedef struct ASTNode ASTNode; // Weird ass thing, but the Stack Overflow gods have spoken
 
 typedef enum {
     AST_INT,
     AST_BINOP,
-    AST_EXIT
+    AST_EXIT,
+    AST_VAR_DECL,
+    AST_VAR,
+    AST_ASSIGN,
+    AST_PROGRAM
 } ASTNodeType;
 
 typedef struct ASTNode {
     ASTNodeType type;
 
     union {
-        // Int Lit
         int int_value;
 
-        // Bin Op
         struct {
-            int op;  // Token +, Token -, Token *, etc...
-            struct ASTNode *left;
-            struct ASTNode *right;
+            int op;
+            struct ASTNode* left;
+            struct ASTNode* right;
         } binop;
 
-        // Exit Stat
         struct {
-            struct ASTNode *expr;
+            ASTNode** statements;
+            int count;
+            int capacity;
+        } program;
+
+        struct {
+            struct ASTNode* expr;
         } exit_stmt;
+
+        struct {
+            char* name;
+        } var_decl;
+
+        struct {
+            char* name;
+        } var;
+
+        struct {
+            char* name;
+            struct ASTNode* value;
+        } assign;
     };
 } ASTNode;
 
 // Functions
+ASTNode* make_program_node();
 ASTNode* make_int_node(int value);
 ASTNode* make_binop_node(int op, ASTNode* left, ASTNode* right);
 ASTNode* make_exit_node(ASTNode* expr);
+ASTNode* make_var_decl_node(char* name);
+ASTNode* make_var_node(char* name);
+ASTNode* make_assign_node(char* name, ASTNode* value);
+void add_statement(ASTNode* program, ASTNode* stmt);
 
 #endif

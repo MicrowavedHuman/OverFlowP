@@ -15,8 +15,10 @@ int main(int argc, char **argv)
     int passed; // Custom error handling is implemented with this
     int x;
     int debug; // Whether or not to print debug messages
+    int remove_true;
     passed = 1;
     debug = 0;
+    remove_true = 1;
     char* output_name = "output";
 
     printf("OverFlowP\n");
@@ -40,6 +42,11 @@ int main(int argc, char **argv)
                 output_name = strdup(argv[3]);
             }
         }
+        if( in_list(argv, argc, "-dra") == 1)
+        {
+            remove_true = 0;
+        }
+
     }
     char* buffer; // Create an array of chars called buffer
     buffer = read_file(argv[1]); // Initliaze buffer!!
@@ -89,8 +96,9 @@ int main(int argc, char **argv)
     snprintf(output, sizeof(output), "assembling_dir/%s.s", output_name);
     snprintf(cmd, sizeof(cmd), "gcc %s -o %s -nostdlib", output, output_name);
     system(cmd);
+
     // Assuming Finished with AST and assembling
-    if(passed == 1)
+    if(passed == 1 && remove_true == 1)
     {
         system("rm -rf assembling_dir");
     }

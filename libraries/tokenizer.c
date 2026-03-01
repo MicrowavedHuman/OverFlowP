@@ -59,6 +59,9 @@ Token tokenize(const char** input_ptr){
 
         if (string_compare(token.text, "exit") == 1){
             token.type = TOKEN_EXIT;
+        } else if(string_compare(token.text, "int"))
+        {
+            token.type = TOKEN_INT;
         }
         else {
             token.type = TOKEN_IDENTIFIER;
@@ -75,6 +78,8 @@ Token tokenize(const char** input_ptr){
         case '/': token.type = TOKEN_DIVIDE; token.text = strdup("/"); break;
         case '(': token.type = TOKEN_LPAREN; token.text = strdup("("); break;
         case ')': token.type = TOKEN_RPAREN; token.text = strdup(")"); break;
+        case '^': token.type = TOKEN_EXPO; token.text = strdup("^"); break;
+        case '=': token.type = TOKEN_ASSIGN; token.text = strdup("="); break;
         case ';': token.type = TOKEN_SEMI; token.text = strdup(";"); break;
         default:
             printf("Unknown character: %c\n", *input);
