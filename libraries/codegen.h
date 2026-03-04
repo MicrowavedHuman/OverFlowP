@@ -7,6 +7,7 @@ typedef struct {
 } Variable;
 
 void generate_expression(ASTNode* node);
+void generate_statement(ASTNode* node);
 void generate_program(ASTNode* node, char* output_name);
 
 

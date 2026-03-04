@@ -58,8 +58,17 @@ int file_sb(const char* filepath)
     return filesize;
 }
 
+void logo_print()
+{
+    printf("____________________________________________________________________\n");
+    printf("|   ___  _      _ ___  ___  ____  _      ___   _    _    _ | ____  |\n");
+    printf("|  /   \\  \\    /  |    |__\\ |     |     /   \\  |    |    | | |   \\ |\n");
+    printf("| |     |  \\  /   |--  | \\  |---  |    |     |  \\  / \\  /  | |___/ |\n");
+    printf("|  \\___/    \\/    |__  |  \\ |     |___  \\___/    \\/   \\/   | |     |\n");
+    printf("|__________________________________________________________________|\n");
+}
 
-char* type_list[] = {"TOKEN_INT", "TOKEN_IDENTIFIER", "TOKEN_EXIT", "TOKEN_LPAREN", "TOKEN_RPAREN", "TOKEN_EOF", "TOKEN_PLUS", "TOKEN_MINUS", "TOKEN_MULT", "TOKEN_DIVIDE", "TOKEN_SEMI"};
+char* type_list[] = {"TOKEN_INT", "TOKEN_IDENTIFIER", "TOKEN_ASSIGN", "TOKEN_EXIT", "TOKEN_LPAREN", "TOKEN_RPAREN", "TOKEN_LBRACE", "TOKEN_RBRACE", "TOKEN_EOF", "TOKEN_PLUS", "TOKEN_MINUS", "TOKEN_MULT", "TOKEN_DIVIDE", "TOKEN_EXPO", "TOKEN_IF", "TOKEN_ELSE", "TOKEN_OR", "TOKEN_AND", "TOKEN_LT", "TOKEN_LTE", "TOKEN_GT", "TOKEN_GTE", "TOKEN_EE", "TOKEN_SEMI"};
 
 char* type_converter(int type)
 {

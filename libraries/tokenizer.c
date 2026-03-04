@@ -8,7 +8,6 @@
 
 void append_token(Token** list, int* count, int* capacity, Token new_token) {
     if (*count >= *capacity) {
-        // Increase capacity
         *capacity = (*capacity == 0) ? 4 : (*capacity * 2);
         *list = (Token*)realloc(*list, (*capacity) * sizeof(Token));
         if (*list == NULL) {
@@ -16,7 +15,7 @@ void append_token(Token** list, int* count, int* capacity, Token new_token) {
             exit(1);
         }
     }
-    (*list)[*count] = new_token; // Copy struct
+    (*list)[*count] = new_token;
     (*count)++;
 }
 
@@ -59,17 +58,83 @@ Token tokenize(const char** input_ptr){
 
         if (string_compare(token.text, "exit") == 1){
             token.type = TOKEN_EXIT;
-        } else if(string_compare(token.text, "int"))
+        } else if(string_compare(token.text, "int") == 1)
         {
             token.type = TOKEN_INT;
-        }
-        else {
+        } else if(string_compare(token.text, "if") == 1)
+        {
+            token.type = TOKEN_IF;
+        } else if(string_compare(token.text, "else") == 1)
+        {
+            token.type = TOKEN_ELSE;
+        } else {
             token.type = TOKEN_IDENTIFIER;
         }
 
         *input_ptr = input;
         return token;
     }
+
+    // Comparison Operators
+    if (*input == '=' && *(input+1) == '=') {
+        token.type = TOKEN_EE;
+        token.text = strdup("==");
+        input += 2;
+        *input_ptr = input;
+        return token;
+    }
+    if (*input == '=') {
+        token.type = TOKEN_ASSIGN;
+        token.text = strdup("=");
+        input++;
+        *input_ptr = input;
+        return token;
+    }
+    if (*input == '<' && *(input+1) == '=') {
+        token.type = TOKEN_LTE;
+        token.text = strdup("<=");
+        input += 2;
+        *input_ptr = input;
+        return token;
+    }
+    if (*input == '<') {
+        token.type = TOKEN_LT;
+        token.text = strdup("<");
+        input++;
+        *input_ptr = input;
+        return token;
+    }
+
+    if (*input == '>' && *(input+1) == '=') {
+        token.type = TOKEN_GTE;
+        token.text = strdup(">=");
+        input += 2;
+        *input_ptr = input;
+        return token;
+    }
+    if (*input == '>') {
+        token.type = TOKEN_GT;
+        token.text = strdup(">");
+        input++;
+        *input_ptr = input;
+        return token;
+    }
+
+    if (*input == '|' && *(input+1) == '|') {
+        token.type = TOKEN_OR;
+        token.text = strdup("||");
+        input += 2;
+        *input_ptr = input;
+        return token;
+    }
+    if (*input == '&' && *(input+1) == '&') {
+        token.type = TOKEN_AND;
+        token.text = strdup("&&");
+        input += 2;
+        *input_ptr = input;
+        return token;
+    }
+
 
     switch (*input) {
         case '+': token.type = TOKEN_PLUS; token.text = strdup("+"); break;
@@ -78,8 +143,9 @@ Token tokenize(const char** input_ptr){
         case '/': token.type = TOKEN_DIVIDE; token.text = strdup("/"); break;
         case '(': token.type = TOKEN_LPAREN; token.text = strdup("("); break;
         case ')': token.type = TOKEN_RPAREN; token.text = strdup(")"); break;
+        case '{': token.type = TOKEN_LBRACE; token.text = strdup("{"); break;
+        case '}': token.type = TOKEN_RBRACE; token.text = strdup("}"); break;
         case '^': token.type = TOKEN_EXPO; token.text = strdup("^"); break;
-        case '=': token.type = TOKEN_ASSIGN; token.text = strdup("="); break;
         case ';': token.type = TOKEN_SEMI; token.text = strdup(";"); break;
         default:
             printf("Unknown character: %c\n", *input);

@@ -20,5 +20,8 @@ ASTNode* parse_term(Parser* p);
 ASTNode* parse_factor(Parser* p);
 ASTNode* parse_statement(Parser* p);
 ASTNode* parse_program(Parser* p);
+ASTNode* parse_if(Parser* p);
+ASTNode* parse_comparison(Parser* p);
+ASTNode* parse_logical(Parser* p);
 
 #endif

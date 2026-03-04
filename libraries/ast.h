@@ -11,26 +11,20 @@ typedef enum {
     AST_VAR_DECL,
     AST_VAR,
     AST_ASSIGN,
-    AST_PROGRAM
+    AST_BLOCK,
+    AST_PROGRAM,
+    AST_IF
 } ASTNodeType;
 
 typedef struct ASTNode {
     ASTNodeType type;
-
     union {
         int int_value;
-
         struct {
             int op;
             struct ASTNode* left;
             struct ASTNode* right;
         } binop;
-
-        struct {
-            ASTNode** statements;
-            int count;
-            int capacity;
-        } program;
 
         struct {
             struct ASTNode* expr;
@@ -48,6 +42,18 @@ typedef struct ASTNode {
             char* name;
             struct ASTNode* value;
         } assign;
+
+        struct {
+            int count;
+            int capacity;
+            struct ASTNode** statements;
+        } program;
+
+        struct {
+            struct ASTNode* condition;
+            struct ASTNode* then_branch;
+            struct ASTNode* else_branch;
+        } if_stmt;
     };
 } ASTNode;
 
@@ -59,6 +65,7 @@ ASTNode* make_exit_node(ASTNode* expr);
 ASTNode* make_var_decl_node(char* name);
 ASTNode* make_var_node(char* name);
 ASTNode* make_assign_node(char* name, ASTNode* value);
+ASTNode* make_if_node(ASTNode* condition, ASTNode* then_branch, ASTNode* else_branch);
 void add_statement(ASTNode* program, ASTNode* stmt);
 
 #endif

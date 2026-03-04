@@ -21,14 +21,8 @@ int main(int argc, char **argv)
     remove_true = 1;
     char* output_name = "output";
 
-    printf("OverFlowP\n");
     if(argc < 2){
         printf("Please at least put in 1 argument.\n");
-        passed = 0; // Reports failed
-        return(1);
-    }
-    else if(string_compare(argv[1], "-h") == 1 || string_compare(argv[1], "--help") == 1){
-        printf("Commands:\n\t1. help, lists the commands: -h or --help\n");
         passed = 0; // Reports failed
         return(1);
     }
@@ -46,7 +40,15 @@ int main(int argc, char **argv)
         {
             remove_true = 0;
         }
-
+        if (in_list(argv, argc, "-p") == 1)
+        {
+            logo_print();
+        }
+        if (in_list(argv, argc, "-h") == 1 || in_list(argv, argc, "--help"))
+        {
+            printf("Commands:\n\t1. Help, lists the commands: -h or --help\n\t2. Output, changes the name of the output file: -o\n\t3. Don't Remove Assembly, this flag makes it so that the assembly file doesn't get removed: -dra\n\t4. Print Logo, prints the fancy logo of OverFlowP: -p\n");
+            exit(0);
+        }
     }
     char* buffer; // Create an array of chars called buffer
     buffer = read_file(argv[1]); // Initliaze buffer!!

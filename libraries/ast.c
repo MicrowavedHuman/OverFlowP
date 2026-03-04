@@ -54,6 +54,16 @@ ASTNode* make_assign_node(char* name, ASTNode* value)
     return node;
 }
 
+ASTNode* make_if_node(ASTNode* condition, ASTNode* then_branch, ASTNode* else_branch)
+{
+    ASTNode* node = malloc(sizeof(ASTNode));
+    node->type = AST_IF;
+    node->if_stmt.condition = condition;
+    node->if_stmt.then_branch = then_branch;
+    node->if_stmt.else_branch = else_branch;
+    return node;
+}
+
 ASTNode* make_program_node()
 {
     ASTNode* node = malloc(sizeof(ASTNode));
